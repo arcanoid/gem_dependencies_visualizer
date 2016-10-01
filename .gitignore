@@ -1,0 +1,16 @@
+/.bundle/
+/.yardoc
+/Gemfile.lock
+/_yardoc/
+/coverage/
+/doc/
+/pkg/
+/spec/reports/
+/tmp/
+
+# IntelliJ / Rubymine files
+.idea/
+*.iml
+
+# Don't take into account all built gems
+*.gem
