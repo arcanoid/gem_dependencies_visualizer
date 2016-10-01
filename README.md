@@ -30,6 +30,10 @@ To use it just run the following in your code:
 GemDependenciesVisualizer.produce_gems_graph(gemfile_lock_string, graph_name)
 ```
 
+For example by using the produced Gemfile.lock in this gem, we can get the following:
+
+![Sample produced graph](https://raw.githubusercontent.com/arcanoid/gem_dependencies_visualizer/master/sample_images/graph_sample.png)
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
