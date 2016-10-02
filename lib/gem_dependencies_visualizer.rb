@@ -15,7 +15,7 @@ module GemDependenciesVisualizer
   #########
 
   def self.populate_gem_data(gemfile_lock_content)
-    string_array = gemfile_lock_content.split("\n")
+    string_array = gemfile_lock_content.gsub("\r\n", "\n").split("\n")
     gem_list_index = 0
 
     string_array.each_with_index do |x, index|
