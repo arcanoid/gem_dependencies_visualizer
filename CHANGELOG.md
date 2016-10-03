@@ -1,3 +1,12 @@
+## 0.1.2 (2016-09-04)
+
+Fixes:
+* Regex is now updated to support gems without version set
+
+Features:
+* Allow clients to set if they want the gem version in the graph
+* Read through the whole Gemfile.lock content (not just the first)
+
 ## 0.1.1 (2016-09-02)
 
 Fixes:
