@@ -18,40 +18,33 @@ module GemDependenciesVisualizer
   def self.populate_gem_data(gemfile_lock_content)
     string_array = gemfile_lock_content.gsub("\r\n", "\n").split("\n")
     gem_list_index = 0
+    gem_list = {}
 
     string_array.each_with_index do |x, index|
       if /.*specs:.*/.match x
         gem_list_index = index + 1
-        break
-      end
-    end
 
-    continue = true
-    gem_list = {}
-    key = string_array[gem_list_index].gsub(/ \(.*\)/, '').gsub(' ', '')
-    values = []
-    gem_list_index += 1
-
-    while continue
-      if /^    [\S]*( \(.*\))?$/.match string_array[gem_list_index]
-        gem_list[key] = values
+        continue = true
         key = string_array[gem_list_index].gsub(/ \(.*\)/, '').gsub(' ', '')
         values = []
-      elsif /^      [\S]*( \(.*\))?$/.match string_array[gem_list_index]
-        values << string_array[gem_list_index].gsub(/ \(.*\)/, '').gsub(' ', '')
-      else
-        puts "hello"
-        puts string_array[gem_list_index]
-        gem_list[key] = values
-        continue = false
+        gem_list_index += 1
+
+        while continue
+          if /^    [\S]*( \(.*\))?$/.match string_array[gem_list_index]
+            gem_list[key] = values
+            key = string_array[gem_list_index].gsub(/ \(.*\)/, '').gsub(' ', '')
+            values = []
+          elsif /^      [\S]*( \(.*\))?$/.match string_array[gem_list_index]
+            values << string_array[gem_list_index].gsub(/ \(.*\)/, '').gsub(' ', '')
+          else
+            gem_list[key] = values
+            continue = false
+          end
+
+          gem_list_index += 1
+        end
       end
-
-      gem_list_index += 1
     end
-
-    puts "="*100
-    puts gem_list
-    puts "="*100
 
     gem_list
   end
