@@ -4,6 +4,7 @@ module GemDependenciesVisualizer
   def self.produce_gems_graph(string_input, graph_name = nil)
      unless string_input.nil?
       g = GraphViz::new( :G, :type => :digraph )
+      g[:rankdir] ='LR'
 
       data = populate_gem_data string_input
       populate_gem_graph g, data, graph_name
@@ -19,31 +20,38 @@ module GemDependenciesVisualizer
     gem_list_index = 0
 
     string_array.each_with_index do |x, index|
-      if /.*GEM.*/.match x
-        gem_list_index = index + 3
+      if /.*specs:.*/.match x
+        gem_list_index = index + 1
         break
       end
     end
 
     continue = true
     gem_list = {}
-      key = string_array[gem_list_index].gsub(/ \(.*\)/, '').gsub(' ', '')
-      values = []
-      gem_list_index += 1
+    key = string_array[gem_list_index].gsub(/ \(.*\)/, '').gsub(' ', '')
+    values = []
+    gem_list_index += 1
 
     while continue
-      if /^    [\S]* \(.*\)$/.match string_array[gem_list_index]
+      if /^    [\S]*( \(.*\))?$/.match string_array[gem_list_index]
         gem_list[key] = values
         key = string_array[gem_list_index].gsub(/ \(.*\)/, '').gsub(' ', '')
         values = []
-      elsif /^      [\S]* \(.*\)$/.match string_array[gem_list_index]
+      elsif /^      [\S]*( \(.*\))?$/.match string_array[gem_list_index]
         values << string_array[gem_list_index].gsub(/ \(.*\)/, '').gsub(' ', '')
       else
+        puts "hello"
+        puts string_array[gem_list_index]
+        gem_list[key] = values
         continue = false
       end
 
       gem_list_index += 1
     end
+
+    puts "="*100
+    puts gem_list
+    puts "="*100
 
     gem_list
   end
