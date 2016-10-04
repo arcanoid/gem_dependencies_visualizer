@@ -1,3 +1,8 @@
+## 0.1.3 (2016-09-04)
+
+Features:
+* Allow clients to set the directory they want for the graphs to be generated into
+
 ## 0.1.2 (2016-09-04)
 
 Fixes:
