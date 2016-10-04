@@ -7,7 +7,7 @@ module GemDependenciesVisualizer
       g[:rankdir] ='LR'
 
       data = populate_gem_data string_input, options
-      populate_gem_graph g, data, graph_name
+      populate_gem_graph g, data, graph_name, options
   	 end
   end
 
@@ -67,7 +67,7 @@ module GemDependenciesVisualizer
     gem_list
   end
 
-  def self.populate_gem_graph(graph, data, graph_name = nil)
+  def self.populate_gem_graph(graph, data, graph_name = nil, options = {})
     default_node = graph.add_nodes('Default', :label => "<<b>Default</b>>")
 
     data.each do |dependency_item|
@@ -80,11 +80,19 @@ module GemDependenciesVisualizer
     	end
     end
 
-    directory_name = 'app/assets/images/gem_dependencies_graphs'
-    FileUtils.mkdir_p('app') unless File.directory?('app')
-    FileUtils.mkdir_p('app/assets') unless File.directory?('app/assets')
-    FileUtils.mkdir_p('app/assets/images') unless File.directory?('app/assets/images')
-    FileUtils.mkdir_p(directory_name) unless File.directory?(directory_name)
+    directory_name = options[:specific_directory].nil? ? 'app/assets/images/gem_dependencies_graphs' : "#{options[:specific_directory]}/gem_dependencies_graphs"
+
+    full_path = nil
+    directory_name.split('/').each do |namespace|
+      if full_path.nil?
+        full_path = namespace
+      else
+        full_path = [full_path, namespace].join('/')
+      end
+
+      FileUtils.mkdir_p(full_path) unless File.directory?(full_path)
+    end
+
     graph.output(:png => "#{directory_name}/#{graph_name.nil? ? "graph_sample" : graph_name }.png" )
   end  
 
