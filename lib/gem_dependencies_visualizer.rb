@@ -68,15 +68,15 @@ module GemDependenciesVisualizer
   end
 
   def self.populate_gem_graph(graph, data, graph_name = nil, options = {})
-    default_node = graph.add_nodes('Default', :label => "<<b>Default</b>>")
+    default_node = graph.add_nodes('Default', :label => "<<b>Default</b>>", :color => 'dodgerblue3')
 
     data.each do |dependency_item|
-    	graph_parent_node = graph.add_nodes(dependency_item[0], :shape => :msquare)
-    	graph.add_edges(default_node, graph_parent_node)
+    	graph_parent_node = graph.add_nodes(dependency_item[0], :shape => :msquare, :color => 'firebrick3')
+    	graph.add_edges(default_node, graph_parent_node, :color => 'dodgerblue3')
 
     	dependency_item[1].each do |child_gem|
 	    	graph_child_node = graph.add_nodes(child_gem, :shape => :msquare)
-    		graph.add_edges(graph_parent_node, graph_child_node)
+    		graph.add_edges(graph_parent_node, graph_child_node, :color => 'firebrick3')
     	end
     end
 
