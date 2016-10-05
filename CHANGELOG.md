@@ -1,3 +1,8 @@
+## 0.1.4 (2016-09-05)
+
+Features:
+* Add colors to nodes and edges
+
 ## 0.1.3 (2016-09-04)
 
 Features:
