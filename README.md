@@ -18,13 +18,23 @@ Or install it yourself as:
 
 ## Usage
 
-To produce a graph of your gem dependencies, pass the content of a Gemfile.lock as is as an input to the visualizer. You can (optionaly) pass a graph name you might want to give to the .png file to be produced. 
+To produce a graph of your gem dependencies, pass the content of a Gemfile.lock and, if available, the content of the Gemfile as is as an input to the visualizer. You can (optionaly) pass a graph name you might want to give to the .png file to be produced. 
 
 To use it just run the following in your code:
 
 ```ruby
-GemDependenciesVisualizer.produce_gems_graph(gemfile_lock_string, graph_name)
+GemDependenciesVisualizer.produce_gems_graph(gemfile_content, gemfile_lock_content, graph_name, options = {})
 ```
+
+Available options you could use are:
+
+* :graph_direction, which will set how your graph will be produced with options
+** top-bottom, for the graph to start on the top towards the bottom
+** bottom-top, for the graph to start on the bottom towards the top
+** right-left, for the graph to start on the left towards the right
+** anything else is set to default, which is left to right.
+* :keep_gem_version, which will keep the versions set in the Gemfile.lock
+* :specific_directory, which will mark the folder in which the graphs should be rendered. All graphs are always created inside gem_dependencies_graphs folder. Default namespace used is app/assets/images.
 
 For example by using the produced Gemfile.lock in this gem, we can get the following:
 
