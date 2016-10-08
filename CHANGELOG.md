@@ -1,3 +1,9 @@
+## 0.1.5 (2016-09-07)
+
+Features:
+* Clients can now set the direction of the produced tree
+* Read directly requested gems and the dependencies of those by parsing the Gemfile and the Gemfile.lock
+
 ## 0.1.4 (2016-09-05)
 
 Features:
