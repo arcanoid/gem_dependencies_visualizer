@@ -11,6 +11,8 @@
 # IntelliJ / Rubymine files
 .idea/
 *.iml
+.generators
+.rakeTasks
 
 # Don't take into account all built gems
 *.gem
