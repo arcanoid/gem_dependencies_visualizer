@@ -13,6 +13,18 @@ module GemDependenciesVisualizer
   	 end
   end
 
+  def self.produce_gems_graph_from_gemspec(gemspec_content, gem_file_lock_content, graph_name = nil, options = {})
+    if gem_file_lock_content.nil?
+      puts 'Please insert both gemspec and Gemfile.lock contents to proceed or just Gemfile.lock content.'
+     else
+      g = GraphViz::new( :G, :type => :digraph )
+      g[:rankdir] = rankdir(options)
+
+      data = populate_gem_data_from_gemspec gemspec_content, gem_file_lock_content, options
+      populate_gem_graph g, data, graph_name, options
+     end
+  end
+
   #########
   protected
   #########
@@ -29,6 +41,12 @@ module GemDependenciesVisualizer
   def self.collect_gems_from_gemfile(gem_file_content, options = {})
     unless gem_file_content.nil?
       (gem_file_content.scan /.*gem ['"](\S*)['"]/).flatten.uniq.sort
+    end
+  end
+
+  def self.collect_gems_from_gemspec_file(gemspec_file_content, options = {})
+    unless gemspec_file_content.nil?
+      (gemspec_file_content.scan /.*spec\.(add.*dependency|name.*=) ['"](?<attribute>\S*)['"]/).flatten.uniq.sort
     end
   end
 
@@ -84,6 +102,16 @@ module GemDependenciesVisualizer
     gem_list
   end
 
+  def self.populate_gem_data_from_gemspec(gemspec_file_content, gemfile_lock_content, options = {})
+    gem_dependencies = collect_gems_from_gemfile_lock gemfile_lock_content, options
+    gems = collect_gems_from_gemspec_file gemspec_file_content, options
+
+    {
+      :gems => gems,
+      :gem_dependencies => gem_dependencies
+    }
+  end
+
   def self.populate_gem_data(gem_file_content, gemfile_lock_content, options = {})
     gem_dependencies = collect_gems_from_gemfile_lock gemfile_lock_content, options
     gems = collect_gems_from_gemfile gem_file_content, options
@@ -135,8 +163,10 @@ module GemDependenciesVisualizer
 
   private_class_method :populate_gem_graph
   private_class_method :populate_gem_data
+  private_class_method :populate_gem_data_from_gemspec
   private_class_method :clear_gem_name_from_version
   private_class_method :rankdir
   private_class_method :collect_gems_from_gemfile
   private_class_method :collect_gems_from_gemfile_lock
+  private_class_method :collect_gems_from_gemspec_file
 end

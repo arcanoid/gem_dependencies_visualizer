@@ -18,12 +18,13 @@ Or install it yourself as:
 
 ## Usage
 
-To produce a graph of your gem dependencies, pass the content of a Gemfile.lock and, if available, the content of the Gemfile as is as an input to the visualizer. You can (optionaly) pass a graph name you might want to give to the .png file to be produced. 
+To produce a graph of your gem dependencies, pass the content of a Gemfile.lock and, if available, the content of the Gemfile as is as an input to the visualizer. For gems, you can also use a different method to pass the gemspec and your Gemfile.lock content. You can (optionaly) pass a graph name you might want to give to the .png file to be produced. 
 
 To use it just run the following in your code:
 
 ```ruby
 GemDependenciesVisualizer.produce_gems_graph(gemfile_content, gemfile_lock_content, graph_name, options = {})
+GemDependenciesVisualizer.produce_gems_graph_from_gemspec(gemspec_file_content, gemfile_lock_content, graph_name, options = {})
 ```
 
 Available options you could use are:
