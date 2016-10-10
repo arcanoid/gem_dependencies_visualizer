@@ -1,3 +1,8 @@
+## 0.1.6 (2016-09-10)
+
+Features:
+* Add new method for producing graphs from .gemspec and Gemfile.lock file contents, called produce_gems_graph_from_gemspec.
+
 ## 0.1.5 (2016-09-07)
 
 Features:
